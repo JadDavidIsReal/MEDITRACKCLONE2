@@ -11,8 +11,17 @@ const Login: React.FC = () => {
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         // Hardcoded credentials
-        if (username === 'admin' && password === 'password') {
+        if (username === 'nurse' && password === 'password') {
             localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userRole', 'Nurse');
+            navigate('/dashboard');
+        } else if (username === 'doctor' && password === 'password') {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userRole', 'Doctor');
+            navigate('/dashboard');
+        } else if (username === 'patient' && password === 'password') {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userRole', 'Patient');
             navigate('/dashboard');
         } else {
             setError('Invalid username or password');
