@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from '../../components/Sidebar';
-import Stocks from '../../components/Stocks/Stocks';
+import Sidebar from '../../../components/Sidebar';
+import Stocks from '../../../components/Stocks/Stocks';
 
 const StocksPage: React.FC = () => {
     return (
