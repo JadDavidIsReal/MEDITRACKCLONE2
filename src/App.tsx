@@ -1,18 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Dashboard from "/src/pages/Dashboard";
-import Student from "/src/pages/Search/Student";
-import Employee from "/src/pages/Search/Employee";
-import Community from "/src/pages/Search/Community";
-import InventDashboard from "/src/pages/Inventory/InventDashboard";
-import Stocks from "/src/pages/Inventory/Stocks";
-import History from "/src/pages/Inventory/History";
-import Reports from "/src/pages/Reports";
-import Print from "/src/pages/Print";
-import About from "/src/pages/About";
-import Login from "/src/pages/Login";
-import Chat from "/src/pages/Chat";
-import Appointment from "/src/pages/Appointment";
+import Dashboard from "./pages/Dashboard";
+import Student from "./pages/Search/Student";
+import Employee from "./pages/Search/Employee";
+import Community from "./pages/Search/Community";
+import InventDashboard from "./pages/Inventory/InventDashboard";
+import Stocks from "./pages/Inventory/Stocks";
+import History from "./pages/Inventory/History";
+import Reports from "./pages/Reports";
+import Print from "./pages/Print";
+import About from "./pages/About";
+import Login from "./pages/Login";
+import Chat from "./pages/Chat";
+import Appointment from "./pages/Appointment";
 import { PERMISSIONS } from "./config/roles";
 
 // A simple protected route component
@@ -44,7 +44,6 @@ const App: React.FC = () => {
         <Route path="/search/employee" element={<ProtectedRoute><Employee /></ProtectedRoute>} />
         <Route path="/search/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
         <Route path="/inventory/dashboard" element={<ProtectedRoute><InventDashboard /></ProtectedRoute>} />
-        <Route path="/stocks" element={<ProtectedRoute><Stocks /></ProtectedRoute>} />
         <Route path="/inventory/stocks" element={<ProtectedRoute><Stocks /></ProtectedRoute>} />
         <Route path="/inventory/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
         <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
