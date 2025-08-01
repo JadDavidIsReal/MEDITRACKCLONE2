@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Lock } from 'lucide-react';
-import { USERS } from '../mock/users';
+import { USERS } from '../../mock/users';
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -29,7 +29,7 @@ const Login: React.FC = () => {
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#3D1528] to-[#A3386C]">
             <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-2xl shadow-lg">
                 <div className="flex flex-col items-center">
-                    <img src="/Logo.png" alt="Logo" className="w-24 h-24 mb-4" />
+                    <img src="/src/assets/Logo.png" alt="Logo" className="w-24 h-24 mb-4" />
                     <h1 className="text-3xl font-bold text-center text-gray-800">MediTrack</h1>
                     <p className="text-center text-gray-500">Please sign in to continue</p>
                 </div>

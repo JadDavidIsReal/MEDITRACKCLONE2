@@ -1,16 +1,16 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
-import Reports from '../components/Reports/Reports';
+import Chat from '../components/Chat/Chat';
 
-const ReportsPage: React.FC = () => {
+const ChatPage: React.FC = () => {
     return (
         <div className="flex h-screen bg-gray-100">
             <Sidebar />
             <main className="flex-1 p-6 overflow-y-auto ml-64">
-                <Reports />
+                <Chat />
             </main>
         </div>
     );
 };
 
-export default ReportsPage;
+export default ChatPage;
