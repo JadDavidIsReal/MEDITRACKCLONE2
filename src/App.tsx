@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Student from "./pages/Search/Student";
 import Employee from "./pages/Search/Employee";
@@ -11,11 +11,24 @@ import Reports from "./pages/Reports";
 import Print from "./pages/Print";
 import About from "./pages/About";
 import Login from "./pages/Login";
+import { PERMISSIONS } from "./config/roles";
 
 // A simple protected route component
 const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  return isLoggedIn ? children : <Navigate to="/login" />;
+  const userRole = localStorage.getItem("userRole");
+  const location = useLocation();
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
+
+  if (userRole && PERMISSIONS[userRole] && PERMISSIONS[userRole].includes(location.pathname)) {
+    return children;
+  }
+
+  // Redirect to a default page or show an unauthorized message
+  return <Navigate to="/dashboard" />;
 };
 
 const App: React.FC = () => {

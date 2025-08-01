@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Bell,
@@ -16,12 +16,19 @@ import {
     ChevronDown,
     Menu
 } from 'lucide-react';
+import { PERMISSIONS } from '../config/roles';
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
     const [isSidebarOpen, setSidebarOpen] = useState(true);
     const [isSearchOpen, setSearchOpen] = useState(false);
     const [isInventoryOpen, setInventoryOpen] = useState(false);
+    const [userRole, setUserRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        const role = localStorage.getItem('userRole');
+        setUserRole(role);
+    }, []);
 
     const handleNavigation = (path: string): void => {
         navigate(path);
@@ -29,6 +36,7 @@ const Dashboard: React.FC = () => {
 
     const handleLogout = (): void => {
         localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("userRole");
         navigate("/login");
     };
 
@@ -72,8 +80,8 @@ const Dashboard: React.FC = () => {
                                 <User className="w-6 h-6 text-[#A3386C]" />
                             </div>
                             <div className={`flex flex-col items-center transition-opacity duration-200 ${isSidebarOpen ? 'opacity-100' : 'opacity-0'}`}>
-                                <p className="text-[20px] font-semibold">John Doe</p>
-                                <p className="text-sm">Nurse</p>
+                                <p className="text-[20px] font-semibold">{userRole}</p>
+                                <p className="text-sm">{userRole}</p>
                             </div>
                         </div>
                         <p className={`text-center text-xs transition-opacity duration-200 ${isSidebarOpen ? 'opacity-100' : 'opacity-0'}`}>Fr Selga, Davao City</p>
@@ -81,84 +89,105 @@ const Dashboard: React.FC = () => {
 
                     <nav className="mt-8">
                         <div className="px-4 space-y-2">
-                            {/* Dashboard link - Active in Dashboard */}
-                            <div className="flex items-center px-4 py-3 bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/dashboard')}>
-                                <LayoutDashboard className="w-5 h-5 text-white flex-shrink-0" />
-                                {isSidebarOpen && <p className="text-sm font-medium text-white ml-3 whitespace-nowrap">Dashboard</p>}
-                            </div>
+                            {userRole && PERMISSIONS[userRole]?.includes('/dashboard') && (
+                                <div className="flex items-center px-4 py-3 bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/dashboard')}>
+                                    <LayoutDashboard className="w-5 h-5 text-white flex-shrink-0" />
+                                    {isSidebarOpen && <p className="text-sm font-medium text-white ml-3 whitespace-nowrap">Dashboard</p>}
+                                </div>
+                            )}
 
-                            {/* Search Submenu */}
-                            <div>
-                                <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => setSearchOpen(!isSearchOpen)}>
-                                    <Search className="w-5 h-5 text-white flex-shrink-0" />
-                                    {isSidebarOpen && (
-                                        <div className="flex justify-between w-full items-center">
-                                            <p className="text-sm text-white ml-3 whitespace-nowrap">Search</p>
-                                            <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isSearchOpen ? 'rotate-180' : ''}`} />
+                            {userRole && (PERMISSIONS[userRole]?.includes('/search/student') || PERMISSIONS[userRole]?.includes('/search/employee') || PERMISSIONS[userRole]?.includes('/search/community')) && (
+                                <div>
+                                    <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => setSearchOpen(!isSearchOpen)}>
+                                        <Search className="w-5 h-5 text-white flex-shrink-0" />
+                                        {isSidebarOpen && (
+                                            <div className="flex justify-between w-full items-center">
+                                                <p className="text-sm text-white ml-3 whitespace-nowrap">Search</p>
+                                                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isSearchOpen ? 'rotate-180' : ''}`} />
+                                            </div>
+                                        )}
+                                    </div>
+                                    {isSidebarOpen && isSearchOpen && (
+                                        <div className="mt-1 space-y-1 pl-8">
+                                            {PERMISSIONS[userRole]?.includes('/search/student') && (
+                                                <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/search/student')}>
+                                                    <GraduationCap className="w-5 h-5 text-white flex-shrink-0" />
+                                                    <p className="text-sm text-white ml-3 whitespace-nowrap">Student</p>
+                                                </div>
+                                            )}
+                                            {PERMISSIONS[userRole]?.includes('/search/employee') && (
+                                                <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/search/employee')}>
+                                                    <Briefcase className="w-5 h-5 text-white flex-shrink-0" />
+                                                    <p className="text-sm text-white ml-3 whitespace-nowrap">Employee</p>
+                                                </div>
+                                            )}
+                                            {PERMISSIONS[userRole]?.includes('/search/community') && (
+                                                <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/search/community')}>
+                                                    <Users className="w-5 h-5 text-white flex-shrink-0" />
+                                                    <p className="text-sm text-white ml-3 whitespace-nowrap">Community</p>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 </div>
-                                {isSidebarOpen && isSearchOpen && (
-                                    <div className="mt-1 space-y-1 pl-8">
-                                        <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/search/student')}>
-                                            <GraduationCap className="w-5 h-5 text-white flex-shrink-0" />
-                                            <p className="text-sm text-white ml-3 whitespace-nowrap">Student</p>
-                                        </div>
-                                        <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/search/employee')}>
-                                            <Briefcase className="w-5 h-5 text-white flex-shrink-0" />
-                                            <p className="text-sm text-white ml-3 whitespace-nowrap">Employee</p>
-                                        </div>
-                                        <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/search/community')}>
-                                            <Users className="w-5 h-5 text-white flex-shrink-0" />
-                                            <p className="text-sm text-white ml-3 whitespace-nowrap">Community</p>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                            )}
 
-                            {/* Inventory Submenu */}
-                            <div>
-                                <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => setInventoryOpen(!isInventoryOpen)}>
-                                    <Archive className="w-5 h-5 text-white flex-shrink-0" />
-                                    {isSidebarOpen && (
-                                        <div className="flex justify-between w-full items-center">
-                                            <p className="text-sm text-white ml-3 whitespace-nowrap">Inventory</p>
-                                            <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isInventoryOpen ? 'rotate-180' : ''}`} />
+                            {userRole && (PERMISSIONS[userRole]?.includes('/inventory/dashboard') || PERMISSIONS[userRole]?.includes('/inventory/stocks') || PERMISSIONS[userRole]?.includes('/inventory/history')) && (
+                                <div>
+                                    <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => setInventoryOpen(!isInventoryOpen)}>
+                                        <Archive className="w-5 h-5 text-white flex-shrink-0" />
+                                        {isSidebarOpen && (
+                                            <div className="flex justify-between w-full items-center">
+                                                <p className="text-sm text-white ml-3 whitespace-nowrap">Inventory</p>
+                                                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isInventoryOpen ? 'rotate-180' : ''}`} />
+                                            </div>
+                                        )}
+                                    </div>
+                                    {isSidebarOpen && isInventoryOpen && (
+                                        <div className="mt-1 space-y-1 pl-8">
+                                            {PERMISSIONS[userRole]?.includes('/inventory/dashboard') && (
+                                                <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/inventory/dashboard')}>
+                                                    <LayoutDashboard className="w-5 h-5 text-white flex-shrink-0" />
+                                                    <p className="text-sm text-white ml-3 whitespace-nowrap">Dashboard</p>
+                                                </div>
+                                            )}
+                                            {PERMISSIONS[userRole]?.includes('/inventory/stocks') && (
+                                                <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/inventory/stocks')}>
+                                                    <Archive className="w-5 h-5 text-white flex-shrink-0" />
+                                                    <p className="text-sm text-white ml-3 whitespace-nowrap">Stocks</p>
+                                                </div>
+                                            )}
+                                            {PERMISSIONS[userRole]?.includes('/inventory/history') && (
+                                                <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/inventory/history')}>
+                                                    <History className="w-5 h-5 text-white flex-shrink-0" />
+                                                    <p className="text-sm text-white ml-3 whitespace-nowrap">History</p>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 </div>
-                                {isSidebarOpen && isInventoryOpen && (
-                                    <div className="mt-1 space-y-1 pl-8">
-                                        <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/inventory/dashboard')}>
-                                            <LayoutDashboard className="w-5 h-5 text-white flex-shrink-0" />
-                                            <p className="text-sm text-white ml-3 whitespace-nowrap">Dashboard</p>
-                                        </div>
-                                        <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/inventory/stocks')}>
-                                            <Archive className="w-5 h-5 text-white flex-shrink-0" />
-                                            <p className="text-sm text-white ml-3 whitespace-nowrap">Stocks</p>
-                                        </div>
-                                        <div className="flex items-center p-2 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/inventory/history')}>
-                                            <History className="w-5 h-5 text-white flex-shrink-0" />
-                                            <p className="text-sm text-white ml-3 whitespace-nowrap">History</p>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                            )}
 
-                            <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/Reports')}>
-                                <FileText className="w-5 h-5 text-white flex-shrink-0" />
-                                {isSidebarOpen && <p className="text-sm text-white ml-3 whitespace-nowrap">Reports</p>}
-                            </div>
+                            {userRole && PERMISSIONS[userRole]?.includes('/reports') && (
+                                <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/reports')}>
+                                    <FileText className="w-5 h-5 text-white flex-shrink-0" />
+                                    {isSidebarOpen && <p className="text-sm text-white ml-3 whitespace-nowrap">Reports</p>}
+                                </div>
+                            )}
 
-                            <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/Print')}>
-                                <Printer className="w-5 h-5 text-white flex-shrink-0" />
-                                {isSidebarOpen && <p className="text-sm text-white ml-3 whitespace-nowrap">Print</p>}
-                            </div>
+                            {userRole && PERMISSIONS[userRole]?.includes('/print') && (
+                                <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/print')}>
+                                    <Printer className="w-5 h-5 text-white flex-shrink-0" />
+                                    {isSidebarOpen && <p className="text-sm text-white ml-3 whitespace-nowrap">Print</p>}
+                                </div>
+                            )}
 
-                            <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/About')}>
-                                <ShieldQuestion className="w-5 h-5 text-white flex-shrink-0" />
-                                {isSidebarOpen && <p className="text-sm text-white ml-3 whitespace-nowrap">About</p>}
-                            </div>
+                            {userRole && PERMISSIONS[userRole]?.includes('/about') && (
+                                <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/about')}>
+                                    <ShieldQuestion className="w-5 h-5 text-white flex-shrink-0" />
+                                    {isSidebarOpen && <p className="text-sm text-white ml-3 whitespace-nowrap">About</p>}
+                                </div>
+                            )}
                         </div>
                     </nav>
 
