@@ -29,7 +29,7 @@ const Dashboard: React.FC = () => {
 
     const handleLogout = (): void => {
         localStorage.removeItem("isLoggedIn");
-        navigate("/");
+        navigate("/login");
     };
 
     const toggleSidebar = () => {
@@ -82,7 +82,7 @@ const Dashboard: React.FC = () => {
                     <nav className="mt-8">
                         <div className="px-4 space-y-2">
                             {/* Dashboard link - Active in Dashboard */}
-                            <div className="flex items-center px-4 py-3 bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/')}>
+                            <div className="flex items-center px-4 py-3 bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/dashboard')}>
                                 <LayoutDashboard className="w-5 h-5 text-white flex-shrink-0" />
                                 {isSidebarOpen && <p className="text-sm font-medium text-white ml-3 whitespace-nowrap">Dashboard</p>}
                             </div>
