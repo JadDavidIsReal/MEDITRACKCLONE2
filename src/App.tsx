@@ -1,16 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
-import Student from "./pages/Search/Student";
-import Employee from "./pages/Search/Employee";
-import Community from "./pages/Search/Community";
-import InventDashboard from "./pages/Inventory/InventDashboard";
-import Stocks from "./pages/Inventory/Stocks";
-import History from "./pages/Inventory/History";
-import Reports from "./pages/Reports";
-import Print from "./pages/Print";
-import About from "./pages/About";
-import Login from "./pages/Login";
+import Dashboard from "/src/pages/Dashboard";
+import Student from "/src/pages/Search/Student";
+import Employee from "/src/pages/Search/Employee";
+import Community from "/src/pages/Search/Community";
+import InventDashboard from "/src/pages/Inventory/InventDashboard";
+import Stocks from "/src/pages/Inventory/Stocks";
+import History from "/src/pages/Inventory/History";
+import Reports from "/src/pages/Reports";
+import Print from "/src/pages/Print";
+import About from "/src/pages/About";
+import Login from "/src/pages/Login";
+import Chat from "/src/pages/Chat";
+import Appointment from "/src/pages/Appointment";
 import { PERMISSIONS } from "./config/roles";
 
 // A simple protected route component
@@ -48,6 +50,8 @@ const App: React.FC = () => {
         <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
         <Route path="/print" element={<ProtectedRoute><Print /></ProtectedRoute>} />
         <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+        <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+        <Route path="/appointment" element={<ProtectedRoute><Appointment /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
