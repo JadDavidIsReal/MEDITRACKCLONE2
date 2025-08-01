@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Lock } from 'lucide-react';
-import { USERS } from '../../mock/users';
+import { USERS } from '../mock/users';
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');

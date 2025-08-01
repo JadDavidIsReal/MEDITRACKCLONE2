@@ -16,10 +16,10 @@ import {
     ChevronDown,
     Menu
 } from 'lucide-react';
-import { PERMISSIONS } from '../../config/roles';
-import NurseDashboard from '../../components/Dashboard/NurseDashboard';
-import DoctorDashboard from '../../components/Dashboard/DoctorDashboard';
-import PatientDashboard from '../../components/Dashboard/PatientDashboard';
+import { PERMISSIONS } from '../config/roles';
+import NurseDashboard from '../components/Dashboard/NurseDashboard';
+import DoctorDashboard from '../components/Dashboard/DoctorDashboard';
+import PatientDashboard from '../components/Dashboard/PatientDashboard';
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
