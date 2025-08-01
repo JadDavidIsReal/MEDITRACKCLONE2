@@ -24,10 +24,13 @@ const Dashboard: React.FC = () => {
     const [isSearchOpen, setSearchOpen] = useState(false);
     const [isInventoryOpen, setInventoryOpen] = useState(false);
     const [userRole, setUserRole] = useState<string | null>(null);
+    const [userName, setUserName] = useState<string | null>(null);
 
     useEffect(() => {
         const role = localStorage.getItem('userRole');
+        const name = localStorage.getItem('userName');
         setUserRole(role);
+        setUserName(name);
     }, []);
 
     const handleNavigation = (path: string): void => {
@@ -37,6 +40,7 @@ const Dashboard: React.FC = () => {
     const handleLogout = (): void => {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("userRole");
+        localStorage.removeItem("userName");
         navigate("/login");
     };
 
@@ -80,7 +84,7 @@ const Dashboard: React.FC = () => {
                                 <User className="w-6 h-6 text-[#A3386C]" />
                             </div>
                             <div className={`flex flex-col items-center transition-opacity duration-200 ${isSidebarOpen ? 'opacity-100' : 'opacity-0'}`}>
-                                <p className="text-[20px] font-semibold">{userRole}</p>
+                                <p className="text-[20px] font-semibold">{userName}</p>
                                 <p className="text-sm">{userRole}</p>
                             </div>
                         </div>

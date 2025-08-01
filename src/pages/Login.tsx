@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Lock } from 'lucide-react';
+import { USERS } from '../mock/users';
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -10,18 +11,14 @@ const Login: React.FC = () => {
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        // Hardcoded credentials
-        if (username === 'nurse' && password === 'password') {
+        const user = USERS.find(
+            (user) => user.username === username && user.password === password
+        );
+
+        if (user) {
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userRole', 'Nurse');
-            navigate('/dashboard');
-        } else if (username === 'doctor' && password === 'password') {
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userRole', 'Doctor');
-            navigate('/dashboard');
-        } else if (username === 'patient' && password === 'password') {
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userRole', 'Patient');
+            localStorage.setItem('userRole', user.role);
+            localStorage.setItem('userName', user.name);
             navigate('/dashboard');
         } else {
             setError('Invalid username or password');
