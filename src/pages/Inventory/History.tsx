@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from '../../../components/Sidebar';
-import History from '../../../components/History/History';
+import Sidebar from '../../components/Sidebar';
+import History from '../../components/History/History';
 
 const HistoryPage: React.FC = () => {
     return (

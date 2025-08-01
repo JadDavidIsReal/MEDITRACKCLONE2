@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from '../../../components/Sidebar';
-import CommunitySearch from '../../../components/Search/CommunitySearch';
+import Sidebar from '../../components/Sidebar';
+import CommunitySearch from '../../components/Search/CommunitySearch';
 
 const Community: React.FC = () => {
     return (
