@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { COMMUNITY_PATIENTS } from '../../mock/patients';
 import { ROLES } from '../../config/roles';
 
@@ -137,10 +138,14 @@ const CommunitySearch: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {patients.map((patient, index) => (
-                            <tr key={index}>
-                                <td className="py-2 px-4 border-b">{patient.lastName}</td>
-                                <td className="py-2 px-4 border-b">{patient.firstName}</td>
+                        {patients.map((patient) => (
+                            <tr key={patient.id} className="cursor-pointer hover:bg-gray-100">
+                                <td className="py-2 px-4 border-b">
+                                    <Link to={`/patient/community/${patient.id}`}>{patient.lastName}</Link>
+                                </td>
+                                <td className="py-2 px-4 border-b">
+                                    <Link to={`/patient/community/${patient.id}`}>{patient.firstName}</Link>
+                                </td>
                                 <td className="py-2 px-4 border-b">{patient.gender}</td>
                                 <td className="py-2 px-4 border-b">{patient.address}</td>
                                 <td className="py-2 px-4 border-b">{patient.contactNumber}</td>
