@@ -35,6 +35,8 @@ const Sidebar: React.FC = () => {
 
     const handleNavigation = (path: string): void => {
         navigate(path);
+        setSearchOpen(false);
+        setInventoryOpen(false);
     };
 
     const handleLogout = (): void => {
