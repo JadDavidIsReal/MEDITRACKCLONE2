@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ROLES } from '../../config/roles';
 
 interface Message {
     sender: string;
@@ -9,28 +10,42 @@ interface Conversation {
     id: number;
     with: string;
     messages: Message[];
+    withRole: string;
 }
 
+const allConversations: Conversation[] = [
+    {
+        id: 1,
+        with: 'Dr. Jad David M.D.',
+        withRole: ROLES.DOCTOR,
+        messages: [
+            { sender: 'me', text: 'Hi Dr. David, how are you?' },
+            { sender: 'Dr. Jad David M.D.', text: 'I am good, thanks for asking.' },
+        ],
+    },
+    {
+        id: 2,
+        with: 'Maam UIC Nurse',
+        withRole: ROLES.NURSE,
+        messages: [
+            { sender: 'me', text: 'Hi Nurse, do you have the test results?' },
+            { sender: 'Maam UIC Nurse', text: 'Yes, I do. I will send them to you shortly.' },
+        ],
+    },
+];
+
 const Chat: React.FC = () => {
-    const [conversations, setConversations] = useState<Conversation[]>([
-        {
-            id: 1,
-            with: 'Dr. Smith',
-            messages: [
-                { sender: 'me', text: 'Hi Dr. Smith, how are you?' },
-                { sender: 'Dr. Smith', text: 'I am good, thanks for asking.' },
-            ],
-        },
-        {
-            id: 2,
-            with: 'Nurse Betty',
-            messages: [
-                { sender: 'me', text: 'Hi Nurse Betty, do you have the test results?' },
-                { sender: 'Nurse Betty', text: 'Yes, I do. I will send them to you shortly.' },
-            ],
-        },
-    ]);
+    const [conversations, setConversations] = useState<Conversation[]>([]);
     const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
+    const userRole = localStorage.getItem('userRole');
+
+    useEffect(() => {
+        if (userRole === ROLES.NURSE) {
+            setConversations(allConversations.filter(c => c.withRole === ROLES.DOCTOR));
+        } else if (userRole === ROLES.DOCTOR) {
+            setConversations(allConversations.filter(c => c.withRole === ROLES.DOCTOR || c.withRole === ROLES.NURSE));
+        }
+    }, [userRole]);
     const [newMessage, setNewMessage] = useState('');
 
     const handleSendMessage = (e: React.FormEvent) => {

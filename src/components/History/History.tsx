@@ -7,7 +7,7 @@ interface HistoryItem {
 }
 
 const History: React.FC = () => {
-    const [history, setHistory] = useState<HistoryItem[]>([]);
+    const [history] = useState<HistoryItem[]>([]);
 
     return (
         <div>
