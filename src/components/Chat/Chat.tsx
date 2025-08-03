@@ -50,17 +50,39 @@ const Chat: React.FC = () => {
 
     const handleSendMessage = (e: React.FormEvent) => {
         e.preventDefault();
-        if (selectedConversation) {
+        if (selectedConversation && newMessage.trim()) {
+            const userMessage: Message = { sender: 'me', text: newMessage };
             const updatedConversation = {
                 ...selectedConversation,
-                messages: [...selectedConversation.messages, { sender: 'me', text: newMessage }],
+                messages: [...selectedConversation.messages, userMessage],
             };
-            const updatedConversations = conversations.map((c) =>
+
+            const updatedConversations = allConversations.map((c) =>
                 c.id === selectedConversation.id ? updatedConversation : c
             );
+            // This is a mock update. In a real app, you would persist this change.
+            allConversations.splice(0, allConversations.length, ...updatedConversations);
+
+
             setConversations(updatedConversations);
             setSelectedConversation(updatedConversation);
             setNewMessage('');
+
+            // Mock a reply after a short delay
+            setTimeout(() => {
+                const replyText = `This is a mock reply to: "${newMessage}"`;
+                const replyMessage: Message = { sender: selectedConversation.with, text: replyText };
+                const conversationWithReply = {
+                    ...updatedConversation,
+                    messages: [...updatedConversation.messages, replyMessage],
+                };
+                const finalConversations = allConversations.map((c) =>
+                    c.id === selectedConversation.id ? conversationWithReply : c
+                );
+                allConversations.splice(0, allConversations.length, ...finalConversations);
+                setConversations(finalConversations);
+                setSelectedConversation(conversationWithReply);
+            }, 1000);
         }
     };
 

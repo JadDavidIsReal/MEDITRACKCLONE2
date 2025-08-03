@@ -5,7 +5,7 @@ export const ROLES = {
 };
 
 export const PERMISSIONS = {
-    [ROLES.NURSE]: ['/dashboard', '/search/student', '/search/employee', '/search/community', '/inventory/dashboard', '/inventory/stocks', '/inventory/history', '/reports', '/print', '/about', '/nurse/appointments'],
-    [ROLES.DOCTOR]: ['/dashboard', '/search/student', '/search/employee', '/search/community', '/about', '/chat'],
+    [ROLES.NURSE]: ['/dashboard', '/search/student', '/search/employee', '/search/community', '/about', '/nurse/appointments', '/patient/:patientType/:id'],
+    [ROLES.DOCTOR]: ['/dashboard', '/search/student', '/search/employee', '/search/community', '/about', '/chat', '/patient/:patientType/:id'],
     [ROLES.PATIENT]: ['/dashboard', '/about', '/appointment'],
 };

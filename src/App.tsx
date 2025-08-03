@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import Chat from "./pages/Chat";
 import Appointment from "./pages/Appointment";
 import NurseAppointments from "./pages/Nurse/Appointments";
+import PatientDetails from "./pages/PatientDetails";
 import { PERMISSIONS } from "./config/roles";
 
 // A simple protected route component
@@ -53,6 +54,7 @@ const App: React.FC = () => {
         <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         <Route path="/appointment" element={<ProtectedRoute><Appointment /></ProtectedRoute>} />
         <Route path="/nurse/appointments" element={<ProtectedRoute><NurseAppointments /></ProtectedRoute>} />
+        <Route path="/patient/:patientType/:id" element={<ProtectedRoute><PatientDetails /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
