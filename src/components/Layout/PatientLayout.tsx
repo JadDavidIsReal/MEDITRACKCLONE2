@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, User, Menu } from 'lucide-react';
+import { Bell } from 'lucide-react';
 
 interface PatientLayoutProps {
     children: React.ReactNode;

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 const Student: React.FC = () => {
   return <div>Student Page</div>;

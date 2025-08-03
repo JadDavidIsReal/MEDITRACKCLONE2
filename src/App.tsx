@@ -13,6 +13,7 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import Chat from "./pages/Chat";
 import Appointment from "./pages/Appointment";
+import NurseAppointments from "./pages/Nurse/Appointments";
 import { PERMISSIONS } from "./config/roles";
 
 // A simple protected route component
@@ -51,6 +52,7 @@ const App: React.FC = () => {
         <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
         <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         <Route path="/appointment" element={<ProtectedRoute><Appointment /></ProtectedRoute>} />
+        <Route path="/nurse/appointments" element={<ProtectedRoute><NurseAppointments /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

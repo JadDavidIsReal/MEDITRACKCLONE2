@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-    Bell,
     User,
     LayoutDashboard,
     Archive,
@@ -14,14 +13,14 @@ import {
     Briefcase,
     Users,
     ChevronDown,
-    Menu,
     MessageSquare,
+    Calendar,
 } from 'lucide-react';
 import { PERMISSIONS } from '../config/roles';
 
 const Sidebar: React.FC = () => {
     const navigate = useNavigate();
-    const [isSidebarOpen, setSidebarOpen] = useState(true);
+    const [isSidebarOpen] = useState(true);
     const [isSearchOpen, setSearchOpen] = useState(false);
     const [isInventoryOpen, setInventoryOpen] = useState(false);
     const [userRole, setUserRole] = useState<string | null>(null);
@@ -43,10 +42,6 @@ const Sidebar: React.FC = () => {
         localStorage.removeItem("userRole");
         localStorage.removeItem("userName");
         navigate("/login");
-    };
-
-    const toggleSidebar = () => {
-        setSidebarOpen(!isSidebarOpen);
     };
 
     return (
@@ -71,6 +66,13 @@ const Sidebar: React.FC = () => {
                         <div className="flex items-center px-4 py-3 bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/dashboard')}>
                             <LayoutDashboard className="w-5 h-5 text-white flex-shrink-0" />
                             {isSidebarOpen && <p className="text-sm font-medium text-white ml-3 whitespace-nowrap">Dashboard</p>}
+                        </div>
+                    )}
+
+                    {userRole && PERMISSIONS[userRole]?.includes('/nurse/appointments') && (
+                        <div className="flex items-center px-4 py-3 hover:bg-[#77536A] rounded-lg cursor-pointer" onClick={() => handleNavigation('/nurse/appointments')}>
+                            <Calendar className="w-5 h-5 text-white flex-shrink-0" />
+                            {isSidebarOpen && <p className="text-sm text-white ml-3 whitespace-nowrap">Appointments</p>}
                         </div>
                     )}
 

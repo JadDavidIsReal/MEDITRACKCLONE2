@@ -1,4 +1,4 @@
-# MediTrack
+# Health Service Management System
 
 This is a frontend application for a school clinic-based health services platform.
 
@@ -10,7 +10,7 @@ This is a frontend application for a school clinic-based health services platfor
     ```
 2.  Start the development server:
     ```bash
-    npm start
+    npm run dev
     ```
 
 ## User Roles and Credentials

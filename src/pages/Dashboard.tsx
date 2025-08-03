@@ -51,30 +51,6 @@ const Dashboard: React.FC = () => {
         setSidebarOpen(!isSidebarOpen);
     };
 
-    interface DateTimeData {
-        date: string;
-        time: string;
-    }
-
-    // Get current date and time
-    const getCurrentDateTime = (): DateTimeData => {
-        const now = new Date();
-        const date = now.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-        const time = now.toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: true
-        });
-        return { date, time };
-    };
-
-    const { date, time } = getCurrentDateTime();
-
     return (
         <>
             <div className="flex h-screen bg-gray-100">
