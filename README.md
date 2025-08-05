@@ -1,10 +1,11 @@
 # Health Service Management System
 
-This is a frontend application for a school clinic-based health services platform.
+FRONTEND.HOW TO SET UP IN ANY PC.
+step 0.1. Have node.js
 
-## Setup
+## Setup (VS Code)
 
-1.  Install the dependencies:
+1.  Installdependencies:
     ```bash
     npm install
     ```
@@ -12,17 +13,17 @@ This is a frontend application for a school clinic-based health services platfor
     ```bash
     npm run dev
     ```
+boom.
+## Account creDentials as demos
 
-## User Roles and Credentials
+Mock data bc laravel(or any backend) not implemented:
 
-This application uses mock data for user authentication. The available users are:
-
-*   **Nurse**:
+1.   **Nurse**:
     *   Username: `nurse`
     *   Password: `password`
-*   **Doctor**:
+2.   **Doctor**:
     *   Username: `doctor`
     *   Password: `password`
-*   **Patient**:
+3.   **Patient**:
     *   Username: `patient`
     *   Password: `password`
